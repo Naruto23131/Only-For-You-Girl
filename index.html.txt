@@ -1,0 +1,174 @@
+<!-- Romantic Proposal Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Will You Be My Forever? 💖</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      color: #fff;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.2em;
+      animation: fadeIn 2s ease-in-out;
+    }
+    #typewriter {
+      font-size: 1.5em;
+      max-width: 600px;
+      min-height: 80px;
+      margin-bottom: 30px;
+      white-space: pre-line;
+      animation: fadeIn 3s ease-in-out;
+    }
+    .choice-btn {
+      margin: 20px 10px 0 10px;
+      font-size: 1.2em;
+      padding: 12px 32px;
+      background: #ff4081;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff4081;
+      animation: pulse 2s infinite;
+      transition: background 0.3s ease;
+      display: inline-block;
+    }
+    .choice-btn:hover {
+      background: #ff1c68;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 10px #ff4081; }
+      50% { box-shadow: 0 0 30px #ff4081; }
+      100% { box-shadow: 0 0 10px #ff4081; }
+    }
+    .confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 20px;
+      background: #fff;
+      opacity: 0.8;
+      border-radius: 5px;
+      animation: confetti-fall 3s linear forwards;
+    }
+    @keyframes confetti-fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    #answer {
+      font-size: 2em;
+      margin-top: 40px;
+      color: #fff;
+      animation: fadeIn 2s ease-in;
+      display: none;
+    }
+    #choices {
+      margin-top: 30px;
+      display: none;
+    }
+    /* Float away animation for No button */
+    .float-away {
+      animation: floatAway 1.2s forwards;
+    }
+    @keyframes floatAway {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      60% { transform: translateY(-80px) scale(1.2) rotate(-15deg); opacity: 0.7; }
+      100% { transform: translateY(-300px) scale(0.5) rotate(-30deg); opacity: 0; pointer-events: none; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Hey, Beautiful 💖</h1>
+  <div id="typewriter"></div>
+  <button id="proposeBtn">Will You Be My Forever? 💍</button>
+  <div id="choices">
+    <button class="choice-btn" id="yesBtn">Yes 💕</button>
+    <button class="choice-btn" id="noBtn">No 😔</button>
+  </div>
+  <div class="confetti" id="confetti"></div>
+  <div id="answer"></div>
+  <script>
+    // Typewriter effect
+    const message = "From the moment I met you, my world became brighter.\nYour smile, your laughter, your kindness—they mean everything to me.\nToday, I want to ask you something from the bottom of my heart...";
+    let i = 0;
+    function typeWriter() {
+      if (i < message.length) {
+        document.getElementById("typewriter").innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typeWriter, 40);
+      }
+    }
+    typeWriter();
+
+    // Confetti animation
+    function showConfetti() {
+      const confetti = document.getElementById("confetti");
+      for (let i = 0; i < 80; i++) {
+        let piece = document.createElement("div");
+        piece.classList.add("confetti-piece");
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = `hsl(${Math.random()*360},80%,60%)`;
+        piece.style.animationDuration = (Math.random() * 1 + 2) + "s";
+        confetti.appendChild(piece);
+        setTimeout(() => piece.remove(), 3000);
+      }
+    }
+
+    // Proposal button
+    document.getElementById("proposeBtn").onclick = function() {
+      document.getElementById("proposeBtn").style.display = "none";
+      document.getElementById("choices").style.display = "block";
+    };
+
+    // Yes button
+    document.getElementById("yesBtn").onclick = function() {
+      showConfetti();
+      document.getElementById("answer").style.display = "block";
+      document.getElementById("answer").innerHTML = "You just made me the happiest person alive! 💞";
+      document.getElementById("choices").style.display = "none";
+    };
+
+    // No button floats away when hovered
+    const noBtn = document.getElementById("noBtn");
+    noBtn.onmouseover = function() {
+      noBtn.classList.add("float-away");
+      setTimeout(() => {
+        noBtn.style.display = "none";
+      }, 1200);
+    };
+    // No button click (in case someone is very fast!)
+    noBtn.onclick = function() {
+      document.getElementById("answer").style.display = "block";
+      document.getElementById("answer").innerHTML = "It's okay, I'll always cherish you and wish you happiness. 💐";
+      document.getElementById("choices").style.display = "none";
+    };
+  </script>
+</body>
+</html>
